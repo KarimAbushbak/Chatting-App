@@ -24,6 +24,10 @@ initChat(String otherUserId, String otherUserName) {
   );
 }
 
+disposeChat() {
+  Get.delete<ChatController>();
+}
+
 
 
 

@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:chattingapp/core/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+
 
 class ChatController extends GetxController {
   final String otherUserId;
@@ -46,6 +51,35 @@ class ChatController extends GetxController {
     });
 
     messageController.clear();
+  }
+
+  Future<void> sendImage({ImageSource source = ImageSource.gallery}) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile == null) return;
+
+    final imageBytes = await pickedFile.readAsBytes();
+    final base64Image = base64Encode(imageBytes);
+
+    final response = await http.post(
+      Uri.parse('https://api.imgur.com/3/image'),
+      headers: {
+        'Authorization': 'Client-ID 683f86ce4dbbf04',
+      },
+      body: {
+        'image': base64Image,
+      },
+    );
+
+    final resData = json.decode(response.body);
+    final imageUrl = resData['data']['link'];
+
+    await messagesRef.add({
+      Constants.imageUrl: imageUrl,
+      Constants.senderId: currentUserId,
+      Constants.receiverId: otherUserId,
+      Constants.timestamp: FieldValue.serverTimestamp(),
+    });
   }
 
   @override

@@ -41,14 +41,17 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.userListScreen:
         return MaterialPageRoute(builder: (_) => UserListScreen());
-      case Routes.chatScreen:
-        final args = settings.arguments as Map<String, dynamic>;
-        final otherUserId = args[Constants.databaseIdColumnName];
-        final otherUserName = args[Constants.databaseNameColumnName];
-        initChat(otherUserId, otherUserName);
-        return MaterialPageRoute(
-          builder: (_) => const ChatScreen(),
-        );
+    case Routes.chatScreen:
+    final args = settings.arguments as Map<String, dynamic>;
+    final otherUserId = args['uid'];
+    final otherUserName = args['name'];
+    disposeChat();
+    initChat(otherUserId, otherUserName);
+    return MaterialPageRoute(
+    builder: (_) => const ChatScreen(),
+    );
+
+
 
       default:
         return unDefineRoute();

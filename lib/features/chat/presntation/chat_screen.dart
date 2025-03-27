@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../controller/chat_controller.dart';
 
@@ -9,6 +10,7 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
 
     return GetBuilder<ChatController>(
       builder: (ctrl) {
@@ -47,7 +49,9 @@ class ChatScreen extends StatelessWidget {
                               color: isMe ? Colors.blue[200] : Colors.grey[300],
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Text(
+                            child: msg['imageUrl'] != null
+                                ? Image.network(msg['imageUrl'], width: 200)
+                                : Text(
                               msg['text'] ?? '',
                               style: const TextStyle(fontSize: 16),
                             ),
@@ -62,6 +66,15 @@ class ChatScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 child: Row(
                   children: [
+                    IconButton(
+                      icon: const Icon(Icons.image),
+                      onPressed: () => ctrl.sendImage(source: ImageSource.gallery),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.camera_alt),
+                      onPressed: () => ctrl.sendImage(source: ImageSource.camera),
+                    ),
+
                     Expanded(
                       child: TextField(
                         controller: ctrl.messageController,
@@ -79,7 +92,8 @@ class ChatScreen extends StatelessWidget {
                       onPressed: ctrl.sendMessage,
                     )
                   ],
-                ),
+                )
+                  ,
               )
             ],
           ),

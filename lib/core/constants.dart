@@ -19,4 +19,7 @@ class Constants {
   static const String senderId = 'senderId';
   static const String receiverId = 'receiverId';
   static const String timestamp = 'timestamp';
+  static const imageUrl = 'imageUrl';
+
+
 }
