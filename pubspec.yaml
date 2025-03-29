@@ -45,6 +45,9 @@ dependencies:
   googleapis_auth: ^1.4.0
   image_picker: ^0.8.7
   flutter_sound: ^9.1.7
+  permission_handler: ^10.2.0
+  path_provider: ^2.0.14
+
 
 
 

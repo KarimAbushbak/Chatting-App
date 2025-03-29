@@ -1,7 +1,7 @@
 import 'package:chattingapp/features/auth/view/login_screen.dart';
 import 'package:chattingapp/features/auth/view/register_screen.dart';
 import 'package:chattingapp/features/chat/presntation/chat_screen.dart';
-import 'package:chattingapp/features/chat/presntation/user_list_screen.dart';
+import 'package:chattingapp/features/user_list/presntaition/user_list_screen.dart';
 import 'package:chattingapp/features/home/view/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
